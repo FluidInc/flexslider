@@ -159,15 +159,28 @@
           }
         },
         setupPaging: function() {
-          var type = (vars.controlNav === "thumbnails") ? 'control-thumbs' : 'control-paging',
-              j = 1,
-              item;
+          var j = 1,
+              item,
+              type;
+            if (vars.controlNav === "thumbnails"){
+                type = 'control-thumbs'
+            } else if (vars.controlNav === "text"){
+                type = 'text'
+            } else {
+                type = 'control-paging'
+            }
 
           slider.controlNavScaffold = $('<ol class="'+ namespace + 'control-nav ' + namespace + type + '"></ol>');
 
           if (slider.pagingCount > 1) {
             for (var i = 0; i < slider.pagingCount; i++) {
-              item = (vars.controlNav === "thumbnails") ? '<img src="' + slider.slides.eq(i).attr("data-thumb") + '"/>' : '<a>' + j + '</a>';
+              if (vars.controlNav === "thumbnails"){
+                item = '<a>' + slider.slides.eq(i).attr("data-thumb") + '</a>';
+              } else if (vars.controlNav === "text"){
+                item = '<a>' + slider.slides.eq(i).attr("data-text") + '</a>';
+              } else {
+                item = '<a>' + j + '</a>';
+              }
               slider.controlNavScaffold.append('<li>' + item + '</li>');
               j++;
             }
